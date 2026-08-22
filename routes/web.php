@@ -13,7 +13,7 @@ use App\Http\Controllers\Staff\StaffController as StaffScannerController;
 use App\Http\Controllers\Staff\SyncController as StaffSyncController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
