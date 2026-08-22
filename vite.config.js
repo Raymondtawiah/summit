@@ -12,6 +12,8 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/passkeys.js',
+                'resources/js/sync-service.js',
+                'resources/js/scanner-service.js',
             ],
             refresh: true,
             fonts: [

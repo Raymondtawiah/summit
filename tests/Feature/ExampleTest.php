@@ -1,7 +1,7 @@
 <?php
 
-test('returns a successful response', function () {
+test('root redirects guests to the welcome page', function () {
     $response = $this->get(route('home'));
 
-    $response->assertOk();
+    $response->assertRedirect(route('welcome'));
 });

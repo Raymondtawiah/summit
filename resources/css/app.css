@@ -23,21 +23,32 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
-    --color-accent-foreground: var(--color-white);
+    --color-accent: #2563eb;
+    --color-accent-content: #2563eb;
+    --color-accent-foreground: #ffffff;
+    --color-summit-red: #dc2626;
+    --color-summit-red-content: #dc2626;
+    --color-summit-red-foreground: #ffffff;
+    --color-summit-black: #171717;
+    --color-summit-black-content: #171717;
+    --color-summit-black-foreground: #ffffff;
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: #60a5fa;
+        --color-accent-content: #60a5fa;
+        --color-accent-foreground: #0f172a;
+        --color-summit-red: #f87171;
+        --color-summit-red-content: #f87171;
+        --color-summit-red-foreground: #0f172a;
+        --color-summit-black: #f4f4f5;
+        --color-summit-black-content: #f4f4f5;
+        --color-summit-black-foreground: #0f172a;
     }
 }
 
 @layer base {
-
     *,
     ::after,
     ::before,
