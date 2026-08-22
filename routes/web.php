@@ -14,15 +14,11 @@ use App\Http\Controllers\Staff\SyncController as StaffSyncController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-
-Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('dashboard.redirect');
+        return redirect()->route('dashboard');
     }
 
-    return redirect()->route('welcome');
+    return view('welcome');
 })->name('home');
 
 Route::middleware(['auth'])->group(function () {
