@@ -1,5 +1,4 @@
-import * as SyncService from './sync-service.js';
-
+  const staffId = await SyncService.getDeviceInfo('staff_id');
 async function verifyOffline(qrToken) {
   const ticket = await SyncService.findLocalTicketByQrToken(qrToken);
 
@@ -72,8 +71,10 @@ async function verifyOffline(qrToken) {
     };
   }
 
-  const scanPoints = await SyncService.getAll(SyncService.STORES.scanPoints);
-  const accessPoint = scanPoints.find((sp) => sp.id === parseInt(await SyncService.getDeviceInfo('scan_point_id')));
+const scanPoints = await SyncService.getAll(SyncService.STORES.scanPoints);
+   const scanPointIdStr = await SyncService.getDeviceInfo('scan_point_id');
+   const scanPointId = parseInt(scanPointIdStr);
+   const accessPoint = scanPoints.find((sp) => sp.id === scanPointId);
 
   if (!accessPoint) {
     return {
@@ -132,7 +133,6 @@ async function verifyOffline(qrToken) {
 
   const deviceUuid = await SyncService.getDeviceInfo('device_uuid');
   const staffId = await SyncService.getDeviceInfo('staff_id');
-  const scanPointId = await SyncService.getDeviceInfo('scan_point_id');
 
   const existing = await SyncService.findQueuedScan(ticket.id, scanPointId);
 
@@ -189,3 +189,5 @@ async function verifyOnline(qrToken, scanApiUrl) {
 }
 
 export { verifyOffline, verifyOnline };
+  const deviceUuid = await SyncService.getDeviceInfo('device_uuid');
+

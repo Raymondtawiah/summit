@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        @include('partials.head')
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="theme-color" content="#ffffff">
+        <meta name="description" content="LDS Summit Scanner">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    </head>
+    <body class="min-h-screen bg-white antialiased">
+        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-white">
+            <flux:sidebar.header>
+                <x-app-logo :sidebar="true" href="{{ route('staff.dashboard') }}" wire:navigate />
+                <flux:sidebar.collapse class="lg:hidden" />
+            </flux:sidebar.header>
+
+            <flux:sidebar.nav>
+                <flux:sidebar.group :heading="__('Staff Dashboard')" class="grid">
+                    <flux:sidebar.item icon="home" :href="route('staff.dashboard')" :current="request()->routeIs('staff.dashboard')" wire:navigate>
+                        {{ __('Dashboard') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="qr-code" :href="route('staff.scanner')" :current="request()->routeIs('staff.scanner')" wire:navigate>
+                        {{ __('Scanner') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="clock" :href="route('staff.scans')" :current="request()->routeIs('staff.scans')" wire:navigate>
+                        {{ __('Scan History') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="arrow-path" :href="route('staff.sync')" :current="request()->routeIs('staff.sync')" wire:navigate>
+                        {{ __('Sync Data') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="user" :href="route('staff.profile')" :current="request()->routeIs('staff.profile')" wire:navigate>
+                        {{ __('Profile') }}
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
+            </flux:sidebar.nav>
+
+            <flux:spacer />
+
+            <flux:sidebar.nav>
+                <flux:sidebar.item icon="user" :href="route('profile.edit')" :current="request()->routeIs('profile.edit')" wire:navigate>
+                    {{ __('Profile') }}
+                </flux:sidebar.item>
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <flux:sidebar.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full cursor-pointer">
+                        {{ __('Log out') }}
+                    </flux:sidebar.item>
+                </form>
+            </flux:sidebar.nav>
+
+            <!-- Mobile User Menu -->
+            <flux:header class="lg:hidden">
+                <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+                <flux:spacer />
+                <flux:dropdown position="top" align="end">
+                    <flux:profile
+                        :initials="auth()->user()->initials()"
+                        icon-trailing="chevron-down"
+                    />
+                    <flux:menu>
+                        <flux:menu.radio.group>
+                            <div class="p-0 text-sm font-normal">
+                                <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
+                                    <flux:avatar
+                                        :name="auth()->user()->name"
+                                        :initials="auth()->user()->initials()"
+                                    />
+                                    <div class="grid flex-1 text-start text-sm leading-tight">
+                                        <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
+                                        <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
+                                    </div>
+                                </div>
+                            </div>
+                        </flux:menu.radio.group>
+                        <flux:menu.separator />
+                        <flux:menu.radio.group>
+                            <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
+                                {{ __('Settings') }}
+                            </flux:menu.item>
+                            <form method="POST" action="{{ route('logout') }}" class="w-full">
+                                @csrf
+                                <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full cursor-pointer">
+                                    {{ __('Log out') }}
+                                </flux:menu.item>
+                            </form>
+                        </flux:menu.radio.group>
+                    </flux:menu>
+                </flux:dropdown>
+            </flux:header>
+        </flux:sidebar>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        @include('partials.head')
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="theme-color" content="#ffffff">
+        <meta name="description" content="LDS Summit Scanner">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    </head>
+    <body class="min-h-screen bg-white antialiased">
+        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-white">
+            <flux:sidebar.header>
+                <x-app-logo :sidebar="true" href="{{ route('staff.dashboard') }}" wire:navigate />
+                <flux:sidebar.collapse class="lg:hidden" />
+            </flux:sidebar.header>
+
+            <flux:sidebar.nav>
+                <flux:sidebar.group :heading="__('Staff Dashboard')" class="grid">
+                    <flux:sidebar.item icon="home" :href="route('staff.dashboard')" :current="request()->routeIs('staff.dashboard')" wire:navigate>
+                        {{ __('Dashboard') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="qr-code" :href="route('staff.scanner')" :current="request()->routeIs('staff.scanner')" wire:navigate>
+                        {{ __('Scanner') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="clock" :href="route('staff.scans')" :current="request()->routeIs('staff.scans')" wire:navigate>
+                        {{ __('Scan History') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="arrow-path" :href="route('staff.sync')" :current="request()->routeIs('staff.sync')" wire:navigate>
+                        {{ __('Sync Data') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="user" :href="route('staff.profile')" :current="request()->routeIs('staff.profile')" wire:navigate>
+                        {{ __('Profile') }}
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
+            </flux:sidebar.nav>
+
+            <flux:spacer />
+
+            <flux:sidebar.nav>
+                <flux:sidebar.item icon="user" :href="route('profile.edit')" :current="request()->routeIs('profile.edit')" wire:navigate>
+                    {{ __('Profile') }}
+                </flux:sidebar.item>
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <flux:sidebar.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full cursor-pointer">
+                        {{ __('Log out') }}
+                    </flux:sidebar.item>
+                </form>
+            </flux:sidebar.nav>
+
+            <!-- Mobile User Menu -->
+            <flux:header class="lg:hidden">
+                <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+                <flux:spacer />
+                <flux:dropdown position="top" align="end">
+                    <flux:profile
+                        :initials="auth()->user()->initials()"
+                        icon-trailing="chevron-down"
+                    />
+                    <flux:menu>
+                        <flux:menu.radio.group>
+                            <div class="p-0 text-sm font-normal">
+                                <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
+                                    <flux:avatar
+                                        :name="auth()->user()->name"
+                                        :initials="auth()->user()->initials()"
+                                    />
+                                    <div class="grid flex-1 text-start text-sm leading-tight">
+                                        <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
+                                        <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
+                                    </div>
+                                </div>
+                            </div>
+                        </flux:menu.radio.group>
+                        <flux:menu.separator />
+                        <flux:menu.radio.group>
+                            <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
+                                {{ __('Settings') }}
+                            </flux:menu.item>
+                            <form method="POST" action="{{ route('logout') }}" class="w-full">
+                                @csrf
+                                <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full cursor-pointer">
+                                    {{ __('Log out') }}
+                                </flux:menu.item>
+                            </form>
+                        </flux:menu.radio.group>
+                    </flux:menu>
+                </flux:dropdown>
+            </flux:header>
+        </flux:sidebar>
+
+        <flux:main>
+            <flux:header container class="border-b border-black/5 bg-white">
+                <flux:sidebar.toggle class="lg:hidden mr-2" icon="bars-2" inset="left" />
+
+                <div class="flex items-center gap-2">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-md bg-blue-600 text-white">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-1.036.84-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 013.75 9.375v-4.5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 14.625c0-1.036.84-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5a1.875 1.875 0 01-1.875-1.875v-4.5zM13.5 4.875c0-1.036.84-1.875h4.5c1.036 0 1.875.84 1.875 1.875v4.5c0 1.036-.84 1.875-1.875 1.875h-4.5A1.875 1.875 0 0113.5 9.375v-4.5z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10a6 6 0 016-6h12a6 6 0 016 6v36a6 6 0 01-6 6h-12a6 6 0 01-6 6v-6z" />
+                        </svg>
+                    </span>
+                    <flux:heading size="lg" class="text-black dark:text-white">Summit</flux:heading>
+                </div>
+
+                <flux:spacer />
+
+                <div class="flex items-center gap-3">
+                    <div id="connection-status" class="flex items-center gap-1.5 text-sm text-black/70">
+                        <span id="status-dot" class="h-2 w-2 rounded-full bg-green-500"></span>
+                        <span id="status-text">Online</span>
+                    </div>
+
+                    <div id="scan-counter" class="hidden items-center gap-1.5 rounded-full border border-black/10 px-2 py-0.5 text-xs text-black/70">
+                        <span id="scan-count">0</span> scans today
+                    </div>
+
+                    <flux:dropdown position="bottom" align="end">
+                        <flux:profile
+                            :initials="auth()->user()->initials()"
+                            icon-trailing="chevron-down"
+                        />
+                        <flux:menu>
+                            <flux:menu.radio.group>
+                                <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
+                                    <flux:avatar
+                                        :name="auth()->user()->name"
+                                        :initials="auth()->user()->initials()"
+                                    />
+                                    <div class="grid flex-1 text-start text-sm leading-tight">
+                                        <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
+                                        <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
+                                    </div>
+                                </div>
+                            </flux:menu.radio.group>
+                            <flux:menu.separator />
+                            <flux:menu.radio.group>
+                                <flux:menu.item :href="route('staff.dashboard')" icon="home" wire:navigate>
+                                    {{ __('Dashboard') }}
+                                </flux:menu.item>
+                                <flux:menu.item :href="route('staff.scanner')" icon="qr-code" wire:navigate>
+                                    {{ __('Scanner') }}
+                                </flux:menu.item>
+                                <flux:menu.item :href="route('staff.scans')" icon="clock" wire:navigate>
+                                    {{ __('Scan History') }}
+                                </flux:menu.item>
+                                <flux:menu.item :href="route('staff.sync')" icon="arrow-path" wire:navigate>
+                                    {{ __('Sync Data') }}
+                                </flux:menu.item>
+                                <flux:menu.item :href="route('staff.profile')" icon="user" wire:navigate>
+                                    {{ __('Profile') }}
+                                </flux:menu.item>
+                            </flux:menu.radio.group>
+                        </flux:menu>
+                        <form id="logout-form" method="POST" action="{{ route('logout') }}" class="w-full">
+                            @csrf
+                            <flux:menu.item as="button" type="button" id="logout-btn" icon="arrow-right-start-on-rectangle" class="w-full cursor-pointer">
+                                {{ __('Log out') }}
+                            </flux:menu.item>
+                        </form>
+                    </flux:dropdown>
+                </div>
+            </flux:header>
+            {{ $slot }}
+
+            @persist('toast')
+                <flux:toast.group>
+                    <flux:toast />
+                </flux:toast.group>
+            @endpersist
+
+            @fluxScripts
+            <script>
+                function updateConnectionStatus() {
+                    const dot = document.getElementById('status-dot');
+                    const text = document.getElementById('status-text');
+                    if (navigator.onLine) {
+                        dot.classList.remove('bg-red-500', 'bg-yellow-500');
+                        dot.classList.add('bg-green-500');
+                        text.textContent = 'Online';
+                    } else {
+                        dot.classList.remove('bg-green-500', 'bg-yellow-500');
+                        dot.classList.add('bg-red-500');
+                        text.textContent = 'Offline';
+                    }
+                }
+                window.addEventListener('online', updateConnectionStatus);
+                window.addEventListener('offline', updateConnectionStatus);
+                updateConnectionStatus();
+
+                async function checkQueuedScans() {
+                    try {
+                        const response = await fetch('/staff/api/scans/today', {
+                            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                        });
+                        const data = await response.json();
+                        const count = data.scans?.filter(s => s.sync_status === 'pending').length || 0;
+                        const counter = document.getElementById('scan-counter');
+                        const countSpan = document.getElementById('scan-count');
+                        if (counter && countSpan) {
+                            if (count > 0) {
+                                counter.classList.remove('hidden');
+                                counter.classList.add('flex');
+                                countSpan.textContent = count;
+                            } else {
+                                counter.classList.add('hidden');
+                                counter.classList.remove('flex');
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Failed to check queued scans', e);
+                    }
+                }
+
+                document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    await checkQueuedScans();
+                    const count = document.getElementById('scan-count')?.textContent || '0';
+                    if (count > 0) {
+                        if (confirm(`You have ${count} scan(s) waiting to synchronize. Do you want to sync now before logging out?`)) {
+                            const form = document.getElementById('logout-form');
+                            form.submit();
+                        }
+                    } else {
+                        const form = document.getElementById('logout-form');
+                        form.submit();
+                    }
+                });
+
+                checkQueuedScans();
+            </script>
+        </flux:main>
+    </body>
+</html>

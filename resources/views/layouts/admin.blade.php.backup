@@ -6,26 +6,44 @@
     <body class="min-h-screen bg-white antialiased">
         <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-white">
             <flux:sidebar.header>
-                <x-app-logo :sidebar="true" href="{{ route('staff.dashboard') }}" wire:navigate />
+                <x-app-logo :sidebar="true" href="{{ route('admin.dashboard') }}" wire:navigate />
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Staff Dashboard')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('staff.dashboard')" :current="request()->routeIs('staff.dashboard')" wire:navigate>
+                <flux:sidebar.group :heading="__('Summit Admin')" class="grid">
+                    <flux:sidebar.item icon="home" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="qr-code" :href="route('staff.scanner')" :current="request()->routeIs('staff.scanner')" wire:navigate>
-                        {{ __('Scanner') }}
+                    <flux:sidebar.item icon="users" :href="route('admin.participants')" :current="request()->routeIs('admin.participants')" wire:navigate>
+                        {{ __('Participants') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="clock" :href="route('staff.scans')" :current="request()->routeIs('staff.scans')" wire:navigate>
-                        {{ __('Scan History') }}
+                    <flux:sidebar.item icon="arrow-up-tray" :href="route('admin.import')" :current="request()->routeIs('admin.import')" wire:navigate>
+                        {{ __('Import Excel') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="arrow-path" :href="route('staff.sync')" :current="request()->routeIs('staff.sync')" wire:navigate>
-                        {{ __('Sync Data') }}
+                    <flux:sidebar.item icon="ticket" :href="route('admin.tickets')" :current="request()->routeIs('admin.tickets')" wire:navigate>
+                        {{ __('Tickets') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="user" :href="route('staff.profile')" :current="request()->routeIs('staff.profile')" wire:navigate>
-                        {{ __('Profile') }}
+<flux:sidebar.item icon="printer" :href="route('admin.tickets')" :current="request()->routeIs('admin.tickets')" wire:navigate>
+                         {{ __('Print Tickets') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="users" :href="route('admin.staff')" :current="request()->routeIs('admin.staff')" wire:navigate>
+                        {{ __('Staff') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="map-pin" :href="route('admin.scan-points')" :current="request()->routeIs('admin.scan-points')" wire:navigate>
+                        {{ __('Scan Points') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="clipboard-document-check" :href="route('admin.attendance')" :current="request()->routeIs('admin.attendance')" wire:navigate>
+                        {{ __('Attendance') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="chart-bar" :href="route('admin.reports.attendance')" :current="request()->routeIs('admin.reports.*')" wire:navigate>
+                        {{ __('Reports') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="document-text" :href="route('admin.reports.audit-logs')" :current="request()->routeIs('admin.reports.*')" wire:navigate>
+                        {{ __('Audit Logs') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="cog" :href="route('profile.edit')" :current="request()->routeIs('profile.edit') || request()->routeIs('appearance.edit') || request()->routeIs('security.edit')" wire:navigate>
+                        {{ __('Settings') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>

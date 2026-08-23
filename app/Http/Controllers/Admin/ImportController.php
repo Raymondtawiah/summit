@@ -76,8 +76,8 @@ class ImportController extends Controller
         ]);
         $importRecord->save();
 
-        $filePath = storage_path('app/'.$request->input('temp_path'));
-        if (!file_exists($filePath)) {
+        $tempPath = $request->input('temp_path');
+        if (!Storage::disk('local')->exists($tempPath)) {
             $importRecord->update([
                 'status' => ParticipantImport::STATUS_FAILED,
                 'completed_at' => now(),
@@ -85,6 +85,8 @@ class ImportController extends Controller
 
             return redirect()->route('admin.import')->withErrors(['file' => 'Temporary file not found.']);
         }
+
+        $filePath = Storage::disk('local')->path($tempPath);
 
         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         $spreadsheet = $reader->load($filePath);

@@ -24,8 +24,8 @@
                     <flux:sidebar.item icon="ticket" :href="route('admin.tickets')" :current="request()->routeIs('admin.tickets')" wire:navigate>
                         {{ __('Tickets') }}
                     </flux:sidebar.item>
-<flux:sidebar.item icon="printer" :href="route('admin.tickets')" :current="request()->routeIs('admin.tickets')" wire:navigate>
-                         {{ __('Print Tickets') }}
+                    <flux:sidebar.item icon="printer" :href="route('admin.tickets')" :current="request()->routeIs('admin.tickets')" wire:navigate>
+                        {{ __('Print Tickets') }}
                     </flux:sidebar.item>
                     <flux:sidebar.item icon="users" :href="route('admin.staff')" :current="request()->routeIs('admin.staff')" wire:navigate>
                         {{ __('Staff') }}

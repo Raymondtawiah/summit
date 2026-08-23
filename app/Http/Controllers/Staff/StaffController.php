@@ -45,9 +45,21 @@ class StaffController extends Controller
             'pending_sync' => $todayScans->where('sync_status', 'pending')->count(),
         ];
 
+        // Chart data for last 7 days
+        $chartLabels = [];
+        $chartData = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $day = now()->subDays($i)->toDateString();
+            $chartLabels[] = $day;
+            $count = $staff->attendanceLogs()
+                ->whereDate('scanned_at', $day)
+                ->count();
+            $chartData[] = $count;
+        }
+
         $device = $staff->devices()->active()->first();
 
-        return view('staff.dashboard', compact('staff', 'scanPoint', 'isReady', 'readyMessage', 'stats', 'device'));
+        return view('staff.dashboard', compact('staff', 'scanPoint', 'isReady', 'readyMessage', 'stats', 'device', 'chartLabels', 'chartData'));
     }
 
     public function scanner()
